@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body {
+            background-color:skyblue;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .game-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+        }
+
+        .choice-button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .hand-icon {
+            font-size: 96px;
+            margin-bottom: 10px;
+        }
+
+        .result-message {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <div class="game-container">
+        <div class="choice-button" onclick="playGame('rock')">Rock</div>
+        <div class="choice-button" onclick="playGame('paper')">Paper</div>
+        <div class="choice-button" onclick="playGame('scissors')">Scissors</div>
+
+        <div class="hand-icon" id="player-choice"></div>
+        <div class="hand-icon" id="computer-choice"></div>
+
+        <p class="result-message" id="result-rock"></p>
+        <p class="result-message" id="result-paper"></p>
+        <p class="result-message" id="result-scissors"></p>
+    </div>
+
+    <script>
+        function playGame(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+            displayHandIcon('player-choice', playerChoice);
+            displayHandIcon('computer-choice', computerChoice);
+
+            const result = determineWinner(playerChoice, computerChoice);
+
+            const resultMessage = `You chose ${playerChoice}, the computer chose ${computerChoice}. ${result}`;
+
+            document.getElementById(`result-${playerChoice}`).textContent = resultMessage;
+        }
+
+        function determineWinner(playerChoice, computerChoice) {
+            if (playerChoice === computerChoice) {
+                return "It's a tie!";
+            } else if (
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                return 'You win!';
+            } else {
+                return 'Computer wins!';
+            }
+        }
+
+        function displayHandIcon(elementId, choice) {
+            const icons = {
+                'rock': '✊',
+                'paper': '✋',
+                'scissors': '✌️',
+            };
+            document.getElementById(elementId).textContent = icons[choice];
+        }
+    </script>
+</body>
+</html>
